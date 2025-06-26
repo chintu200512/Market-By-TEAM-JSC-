@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #181818;
+      color: #FFD700;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .container {
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      padding: 2rem 2.5rem 1.5rem 2.5rem;
+      margin-top: 3rem;
+      max-width: 520px;
+    }
+    h1 {
+      color: #FFD700;
+      border-bottom: 2px solid #D4AF37;
+      padding-bottom: 0.4rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      font-size: 2rem;
+      text-align: center;
+    }
+    label {
+      color: #FFD700;
+      font-weight: 500;
+    }
+    .form-control, .form-select {
+      background: #282828;
+      border: 1px solid #FFD700;
+      color: #FFD700;
+    }
+    .form-control:focus, .form-select:focus {
+      background: #282828;
+      border-color: #D4AF37;
+      color: #FFD700;
+      box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.18);
+    }
+    .form-check-label {
+      color: #FFD700;
+      font-weight: 400;
+    }
+    .btn-primary {
+      background: #D4AF37;
+      color: #181818;
+      border-color: #FFD700;
+      font-weight: bold;
+      margin-right: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      background: #FFD700;
+      color: #181818;
+      border-color: #D4AF37;
+    }
+    .btn-secondary {
+      background: #282828;
+      color: #FFD700;
+      border-color: #FFD700;
+      font-weight: 500;
+    }
+    .btn-secondary:hover {
+      background: #FFD700;
+      color: #181818;
+      border-color: #D4AF37;
+    }
+    .alert {
+      margin-top: 1.5rem;
+      border: 1px solid #FFD700;
+      background: #282828;
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h1>Edit User</h1>
+  <form method="POST" action="{{ url_for('edit_user', user_id=user.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <div class="mb-2">
+      <label>Username</label>
+      <input type="text" name="username" class="form-control" value="{{ user.username }}" required>
+    </div>
+    <div class="mb-2">
+      <label>Email</label>
+      <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+    </div>
+    <div class="mb-2">
+      <label>New Password (leave blank to keep current)</label>
+      <input type="password" name="password" class="form-control" placeholder="New password">
+    </div>
+    <div class="mb-2">
+      <label>Role</label>
+      <select name="role" class="form-select">
+        <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+      </select>
+    </div>
+    <div class="mb-2 form-check">
+      <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if user.is_active %}checked{% endif %}>
+      <label class="form-check-label" for="is_active">Active</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ url_for('admin_panel') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+</body>
+</html>
