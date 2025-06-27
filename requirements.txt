@@ -1,13 +1,18 @@
+# Core
+setuptools==68.2.2
+wheel==0.41.3
+pip==23.3.1
+
+# Main dependencies
+pandas==2.0.3
+numpy==1.24.3
 flask==3.0.2
 flask-wtf==1.2.1
-wtforms==3.1.2
 yfinance==0.2.37
-pandas==2.0.3  # Downgraded for stability
-numpy==1.24.3  # Works with Pandas 2.0.3
 scikit-learn==1.4.1.post1
-tensorflow==2.16.1  # Stable version
+tensorflow==2.16.1
 plotly==5.18.0
 werkzeug==3.0.1
 flask-sqlalchemy==3.1.1
-flask-login==0.6.3
-gunicorn==21.2.0  # Required for Render
+flask-Login==3.1.1
+gunicorn==21.2.0
