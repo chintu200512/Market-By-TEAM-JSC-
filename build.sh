@@ -1,30 +1,14 @@
-#!/bin/bash
-set -e  # Exit immediately if any command fails
+#!/usr/bin/env bash
+set -e
 
-# 1. CRITICAL: First ensure Python environment is functional
-python -c "import sys; print(f'Python {sys.version}')"
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt --no-cache-dir
 
-# 2. Install core build tools with explicit versions
-python -m pip install --upgrade pip==23.3.1
-python -m pip install --force-reinstall setuptools==68.2.2 wheel==0.41.3
+# ✅ Step 3: Optional validation
+python - <<'PYCODE'
+import pandas, numpy, tensorflow
+print("Pandas:", pandas.__version__, "Numpy:", numpy.__version__, "TensorFlow:", tensorflow.__version__)
+PYCODE
 
-# 3. Verify base tools
-python -m pip check
-python -c "import setuptools; print(f'Setuptools {setuptools.__version__} verified')"
-
-# 4. Install known problematic packages first
-pip install \
-    pandas==2.0.3 \
-    numpy==1.24.3 \
-    tensorflow-cpu==2.13.0 \ 
-    protobuf==3.20.3 \
-    --no-cache-dir
-
-# 5. Install remaining requirements
-pip install -r requirements.txt --no-cache-dir
-
-# 6. Final verification
-python -c "import pandas, numpy, tensorflow; print('Critical imports successful')"
-
-# 7. Start the application
+# 🚀 Step 4: Run your app
 exec gunicorn app:app
