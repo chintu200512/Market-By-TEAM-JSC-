@@ -1,9 +1,11 @@
 services:
   - type: web
-    name: stock-market-app
+    name: market-by-team-jsc
     runtime: python
-    buildCommand: ""
+    buildCommand: "./build.sh"
     startCommand: "gunicorn app:app"
     envVars:
+      - key: FLASK_APP
+        value: app.py
       - key: FLASK_ENV
         value: production
