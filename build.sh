@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
+# Upgrade pip, setuptools, and wheel FIRST
 python -m pip install --upgrade pip setuptools wheel
-python -m pip install -r requirements.txt --no-cache-dir
 
-# ✅ Step 3: Optional validation
-python - <<'PYCODE'
-import pandas, numpy, tensorflow
-print("Pandas:", pandas.__version__, "Numpy:", numpy.__version__, "TensorFlow:", tensorflow.__version__)
-PYCODE
+# Install required packages explicitly before full requirements
+pip install pandas==2.0.3 numpy==1.24.3 tensorflow-cpu==2.13.0 protobuf==3.20.3 --no-cache-dir
 
-# 🚀 Step 4: Run your app
+# Install all remaining dependencies
+pip install -r requirements.txt --no-cache-dir
+
+# Final import check
+python -c "import pandas, numpy, tensorflow; print('Imports OK')"
+
+# Start server
 exec gunicorn app:app
