@@ -1,11 +1,10 @@
 services:
   - type: web
     name: market-by-team-jsc
-    runtime: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn app:app"
+    env: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn app:app
     envVars:
-      - key: FLASK_APP
-        value: app.py
-      - key: FLASK_ENV
-        value: production
+      - key: PYTHON_VERSION
+        value: 3.8.10
