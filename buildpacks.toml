@@ -1,7 +1,0 @@
-[[buildpacks]]
-id = "heroku/python"
-uri = "urn:buildpack:heroku/python"
-
-[[buildpacks]]
-id = "heroku/procfile"
-uri = "urn:buildpack:heroku/procfile"
