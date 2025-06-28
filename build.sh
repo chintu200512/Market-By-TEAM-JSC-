@@ -6,4 +6,4 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt --no-cache-dir
 
 # Start the app
-gunicorn app:app
+gunicorn --bind 0.0.0.0:$PORT app:app

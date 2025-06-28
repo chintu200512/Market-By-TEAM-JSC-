@@ -27,4 +27,6 @@ plotly==5.18.0
 yfinance==0.2.37
 
 # Production server
-gunicorn==21.2.0            # Production WSGI server
+gunicorn==21.2.0            # Production WSGI serve
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
