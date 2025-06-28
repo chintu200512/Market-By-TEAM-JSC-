@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # Exit on error
+set -e # Exit on error
 
 # Install dependencies
 python -m pip install --upgrade pip
