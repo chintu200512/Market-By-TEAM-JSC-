@@ -19,13 +19,18 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask_sqlalchemy import SQLAlchemy
 
+# Fix the indentation and order of initialization
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'  # Replace with a real secret key
-# Replace your current database config with:
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///users.db').replace('postgres://', 'postgresql://')
-csrf = CSRFProtect(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+csrf = CSRFProtect(app)
+
+# Initialize database
+with app.app_context():
+    db.create_all()
 # Configure logging
 handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=3)
 handler.setLevel(logging.INFO)
@@ -740,7 +745,7 @@ def delete_user(user_id):
     db.session.commit()
     flash('User deleted!', 'success')
     return redirect(url_for('admin_panel'))
-# In app.py, ensure you have:
+
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Must be integer
-    app.run(host='0.0.0.0', port=port)  # Must bind to 0.0.0.0
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)

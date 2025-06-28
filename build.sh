@@ -1,15 +1,13 @@
 #!/bin/bash
 set -e
 
-# Clean Python cache
-find . -type d -name "__pycache__" -exec rm -r {} +
+# Install system dependencies first
+sudo apt-get update -qq
+sudo apt-get install -y libenchant1c2a python3-dev
 
-# Install dependencies
-python -m pip install --upgrade pip
-pip install -r requirements.txt --no-cache-dir
-
-# Apply database migrations (if needed)
-flask db upgrade
+# Then install Python packages
+pip install --upgrade pip
+pip install -r requirements.txt
 
 # Start the app
-exec gunicorn --bind 0.0.0.0:$PORT --workers 4 app:app
+exec gunicorn --bind 0.0.0.0:$PORT app:app

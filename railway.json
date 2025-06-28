@@ -1,0 +1,8 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "config": {
+      "aptPackages": ["libenchant1c2a", "python3-dev"]
+    }
+  }
+}
